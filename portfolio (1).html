@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayari Thokairin | フリーランス ポートフォリオ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a2e;
+  --cream: #faf8f5;
+  --warm: #e8e0d4;
+  --accent: #c4956a;
+  --accent-deep: #9e7553;
+  --subtle: #6b6b7b;
+  --white: #ffffff;
+  --card-bg: #ffffff;
+  --shadow-soft: 0 2px 20px rgba(26,26,46,0.06);
+  --shadow-hover: 0 8px 32px rgba(26,26,46,0.12);
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.8;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,248,245,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(196,149,106,0.12);
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 1px 12px rgba(26,26,46,0.08); }
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  text-decoration: none; color: var(--subtle); font-size: 0.85rem;
+  font-weight: 500; letter-spacing: 0.04em;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--accent); transform: scaleX(0);
+  transition: transform 0.3s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span {
+  display: block; width: 22px; height: 2px; background: var(--ink);
+  margin: 5px 0; transition: 0.3s;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -50%; right: -30%; width: 80vw; height: 80vw;
+  background: radial-gradient(circle, rgba(196,149,106,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: -20%; left: -20%; width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(196,149,106,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-label {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent-deep);
+  border: 1px solid var(--accent);
+  padding: 6px 20px; border-radius: 30px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s ease-out;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  animation: fadeUp 0.8s ease-out 0.1s both;
+}
+.hero h1 .name-jp {
+  display: block;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--subtle);
+  margin-top: 8px;
+}
+.hero-tagline {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--subtle);
+  max-width: 520px; margin: 0 auto 36px;
+  font-weight: 300; line-height: 1.9;
+  animation: fadeUp 0.8s ease-out 0.2s both;
+}
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--ink);
+  color: var(--white);
+  text-decoration: none;
+  padding: 14px 36px;
+  border-radius: 50px;
+  font-size: 0.9rem; font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeUp 0.8s ease-out 0.3s both;
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(26,26,46,0.2); }
+.hero-cta svg { width: 16px; height: 16px; }
+
+.scroll-hint {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  animation: bounce 2s infinite;
+}
+.scroll-hint span {
+  display: block; width: 1px; height: 40px; background: var(--accent); margin: 0 auto 8px;
+}
+.scroll-hint small { font-size: 0.65rem; color: var(--subtle); letter-spacing: 0.15em; }
+
+/* ─── SECTIONS ─── */
+section { padding: 100px 24px; }
+.section-inner { max-width: 1000px; margin: 0 auto; }
+.section-label {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent-deep); margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 600; margin-bottom: 48px;
+  line-height: 1.4;
+}
+
+/* ─── ABOUT ─── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.about-text p {
+  margin-bottom: 20px; font-size: 0.95rem; color: #444;
+  line-height: 2;
+}
+.about-text p strong { color: var(--ink); font-weight: 500; }
+.about-highlights {
+  display: flex; flex-direction: column; gap: 20px;
+}
+.highlight-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-soft);
+  border-left: 3px solid var(--accent);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.highlight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+.highlight-card .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 700; color: var(--accent);
+  line-height: 1;
+}
+.highlight-card .label {
+  font-size: 0.82rem; color: var(--subtle); margin-top: 6px;
+}
+
+/* ─── SERVICES ─── */
+#services { background: var(--white); }
+#style { background: var(--white); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.service-card {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s;
+}
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.service-icon {
+  width: 44px; height: 44px;
+  background: var(--white);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px;
+  font-size: 1.3rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.service-card h3 {
+  font-size: 1rem; font-weight: 600; margin-bottom: 10px;
+}
+.service-card p {
+  font-size: 0.85rem; color: var(--subtle); line-height: 1.8;
+}
+.service-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px;
+}
+.service-tags span {
+  font-size: 0.7rem;
+  background: var(--white);
+  color: var(--accent-deep);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(196,149,106,0.25);
+}
+.service-price {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+  letter-spacing: 0.02em;
+}
+.service-price small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--subtle);
+}
+
+/* ─── WORKS ─── */
+.works-list { display: flex; flex-direction: column; gap: 28px; }
+.work-item {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 32px 36px;
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: start;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.work-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.work-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700; color: var(--accent);
+  opacity: 0.5; line-height: 1;
+  padding-top: 4px;
+}
+.work-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+.work-item p { font-size: 0.85rem; color: var(--subtle); line-height: 1.8; }
+.work-scope {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
+}
+.work-scope span {
+  font-size: 0.7rem;
+  background: var(--cream);
+  color: var(--accent-deep);
+  padding: 4px 12px; border-radius: 20px;
+  font-weight: 500;
+}
+.work-results {
+  display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px;
+  padding-top: 14px; border-top: 1px solid var(--warm);
+}
+.work-result {
+  display: flex; align-items: baseline; gap: 4px;
+}
+.work-result .result-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--accent);
+  line-height: 1;
+}
+.work-result .result-label {
+  font-size: 0.75rem; color: var(--subtle);
+}
+
+/* ─── WORK STYLE ─── */
+.style-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.style-item {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  transition: transform 0.2s;
+}
+.style-item:hover { transform: translateY(-2px); }
+.style-item .style-icon { font-size: 1.6rem; margin-bottom: 10px; }
+.style-item h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+.style-item p { font-size: 0.8rem; color: var(--subtle); line-height: 1.7; }
+
+/* ─── SKILLS ─── */
+#skills { background: var(--white); }
+.skills-categories { display: flex; flex-direction: column; gap: 36px; }
+.skill-category h3 {
+  font-size: 0.9rem; font-weight: 600; margin-bottom: 14px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--warm);
+}
+.skill-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-pill {
+  font-size: 0.8rem;
+  background: var(--cream);
+  color: var(--ink);
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-weight: 400;
+  transition: background 0.2s, transform 0.2s;
+}
+.skill-pill:hover { background: var(--warm); transform: translateY(-1px); }
+
+/* ─── CONTACT ─── */
+.contact-box {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 48px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact-box p {
+  font-size: 0.95rem; color: var(--subtle); margin-bottom: 32px; line-height: 1.9;
+}
+.contact-links {
+  display: flex; flex-direction: column; gap: 14px;
+  align-items: center;
+}
+.contact-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.9rem; font-weight: 500;
+  padding: 12px 32px;
+  border-radius: 50px;
+  border: 1px solid var(--warm);
+  transition: all 0.2s;
+  min-width: 280px;
+  justify-content: center;
+}
+.contact-link:hover {
+  background: var(--ink); color: var(--white); border-color: var(--ink);
+}
+.contact-link svg { width: 18px; height: 18px; }
+
+/* ─── FOOTER ─── */
+footer {
+  text-align: center;
+  padding: 40px 24px;
+  font-size: 0.75rem;
+  color: var(--subtle);
+  letter-spacing: 0.05em;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(250,248,245,0.97);
+    backdrop-filter: blur(16px);
+    padding: 20px 24px; gap: 18px;
+    border-bottom: 1px solid var(--warm);
+  }
+  .hamburger { display: block; }
+  
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .work-item { grid-template-columns: 1fr; gap: 12px; }
+  .work-num { font-size: 1.2rem; }
+  .contact-box { padding: 32px 24px; }
+  .contact-link { min-width: auto; width: 100%; }
+  section { padding: 72px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Ayari</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#style">Style</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="メニュー">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-label">Freelance × AI × Marketing</span>
+    <h1>
+      Ayari
+      <span class="name-jp">フリーランス マーケター / AI活用パートナー</span>
+    </h1>
+    <p class="hero-tagline">
+      公務員9年の経験で培った正確性と責任感。<br>
+      AI × SNS × マーケティングで、あなたのビジネスを加速させます。
+    </p>
+    <a href="#contact" class="hero-cta">
+      お仕事のご相談はこちら
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <span></span>
+    <small>SCROLL</small>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner reveal">
+    <p class="section-label">About</p>
+    <h2 class="section-title">「任せて安心」を、すべての仕事に。</h2>
+    <div class="about-grid" style="grid-template-columns: 1fr;">
+      <div class="about-text">
+        <p>
+          <strong>公務員として9年間</strong>勤務。
+          報告・連絡・相談を徹底する仕事の基本と、どんな状況でも正確にやり遂げる責任感は、
+          この時期に身につけました。
+        </p>
+        <p>
+          現在はフリーランスとして、<strong>SNS運用・マーケティング</strong>、<strong>LINE公式構築</strong>、
+          <strong>AIライティング講師</strong>、<strong>EC営業</strong>、
+          <strong>GAS開発</strong>など幅広く対応しています。
+        </p>
+        <p>
+          AI（Claude・ChatGPT）を日常的に活用し、
+          品質を保ちながらスピーディーに納品することを大切にしています。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner reveal">
+    <p class="section-label">Services</p>
+    <h2 class="section-title">ご提供できるサービス</h2>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>SNS運用・マーケティング</h3>
+        <p>YouTube・Instagram・Threads・Xの運用を一括対応。各媒体に合わせたキャプション作成、ストーリー更新、データ分析に基づくコンテンツ提案まで行います。</p>
+        <div class="service-tags">
+          <span>YouTube</span><span>Instagram</span><span>Threads</span><span>X</span><span>データ分析</span>
+        </div>
+        <div class="service-price">月額 50,000円〜 <small>/ 媒体数・対応範囲により変動</small></div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">💬</div>
+        <h3>LINE公式構築・マーケティング</h3>
+        <p>LINE公式アカウントの初期設定からファネル設計、ステップ配信の構築まで。セミナー集客やコミュニティ誘導の導線を設計します。</p>
+        <div class="service-tags">
+          <span>LINE公式</span><span>Lステップ</span><span>ファネル設計</span>
+        </div>
+        <div class="service-price">100,000円〜 <small>/ 初期構築一式</small></div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <h3>AI活用支援・AIライティング講師</h3>
+        <p>Claude・ChatGPTを活用した業務効率化のサポート。プロンプト設計から実務への落とし込みまで、講師としてもお伝えします。</p>
+        <div class="service-tags">
+          <span>Claude</span><span>ChatGPT</span><span>プロンプト設計</span><span>講師</span>
+        </div>
+        <div class="service-price">1名 15,000円〜 <small>/ 内容・時間により変動</small></div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🛒</div>
+        <h3>ECコンサル営業</h3>
+        <p>ECサイトのコンサルティング会社の営業担当として、課題のヒアリングから提案まで対応します。</p>
+        <div class="service-tags">
+          <span>EC</span><span>営業</span><span>コンサルティング</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">✍️</div>
+        <h3>ライティング</h3>
+        <p>YouTubeチャンネル向けシナリオを累計40本以上納品してきた実績あり。防災解説からエンタメ系まで幅広いジャンルに対応。この経験をベースに、AIライティング講師としても活動中です。</p>
+        <div class="service-tags">
+          <span>シナリオ実績</span><span>AIライティング</span><span>講師</span>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">⚙️</div>
+        <h3>ツール開発・業務自動化</h3>
+        <p>Google Apps Script（GAS）を活用した業務効率化ツールの開発。勤怠管理、顧客満足度アンケート、稼働確認、請求書発行など、面倒な作業を仕組み化します。</p>
+        <div class="service-tags">
+          <span>GAS</span><span>スプレッドシート</span><span>自動化</span>
+        </div>
+        <div class="service-price">1件 50,000円〜 <small>/ 仕様により変動</small></div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🎬</div>
+        <h3>YouTubeディレクション</h3>
+        <p>チャンネルの立ち上げから運用まで対応。企画、サムネ方針、投稿スケジュール設計、外注管理などのディレクション業務を担当します。</p>
+        <div class="service-tags">
+          <span>YouTube</span><span>チャンネル立ち上げ</span><span>ディレクション</span>
+        </div>
+        <div class="service-price">月額 50,000円〜 <small>/ 対応範囲により変動</small></div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3>オンライン秘書・ディレクション</h3>
+        <p>スケジュール管理、リサーチ、資料作成、外注管理まで。経営者・個人事業主の「右腕」として、バックオフィスを丸ごとサポートします。</p>
+        <div class="service-tags">
+          <span>秘書</span><span>ディレクション</span><span>外注管理</span>
+        </div>
+        <div class="service-price">時給 2,000円〜 <small>/ 業務内容により変動</small></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section id="works">
+  <div class="section-inner reveal">
+    <p class="section-label">Works</p>
+    <h2 class="section-title">対応実績</h2>
+    <div class="works-list">
+
+      <div class="work-item">
+        <div class="work-num">01</div>
+        <div>
+          <h3>営業支援企業のSNS運用・マーケティング</h3>
+          <p>Threads・Instagram・YouTubeの3媒体を運用。各媒体に最適化したキャプション作成、ストーリーの毎日更新、データ分析に基づくコンテンツ提案を実施。LINE公式のファネル設計・ステップ配信構築、セミナー告知・集客導線の設計、Discord コミュニティ運営まで幅広く担当。マーケティングマネージャーとして戦略立案にも関与。</p>
+          <div class="work-scope">
+            <span>SNS 3媒体</span><span>LINE構築</span><span>セミナー集客</span><span>Discord</span><span>データ分析</span>
+          </div>
+          <div class="work-results">
+            <div class="work-result">
+              <span class="result-num">+1,700</span>
+              <span class="result-label">Instagramフォロワー（3ヶ月）</span>
+            </div>
+            <div class="work-result">
+              <span class="result-num">+400</span>
+              <span class="result-label">LINE登録者</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-num">02</div>
+        <div>
+          <h3>YouTubeチャンネル ディレクション</h3>
+          <p>YouTubeチャンネルの立ち上げからディレクションを担当。企画立案、サムネイル方針の策定、投稿スケジュール設計、外注管理まで一貫して対応。</p>
+          <div class="work-scope">
+            <span>チャンネル立ち上げ</span><span>企画</span><span>ディレクション</span><span>外注管理</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-num">03</div>
+        <div>
+          <h3>YouTubeシナリオ制作</h3>
+          <p>防災ゆっくり解説チャンネルやエンタメ系チャンネル向けに、シナリオを継続的に納品。独自のプロンプトシステムを構築し、品質と効率を両立。高い初稿承認率を維持。</p>
+          <div class="work-scope">
+            <span>防災解説</span><span>エンタメ</span><span>プロンプト設計</span><span>継続案件</span>
+          </div>
+          <div class="work-results">
+            <div class="work-result">
+              <span class="result-num">40本+</span>
+              <span class="result-label">シナリオ累計納品</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-num">04</div>
+        <div>
+          <h3>GAS業務ツール開発</h3>
+          <p>Google Apps Scriptを活用した業務効率化ツールを複数開発。勤怠管理Webアプリ、顧客満足度アンケート、稼働確認ツール、請求書発行ツールなど、クライアントの課題に合わせたツールを提供。</p>
+          <div class="work-scope">
+            <span>勤怠管理</span><span>アンケート</span><span>稼働確認</span><span>請求書発行</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner reveal">
+    <p class="section-label">Skills & Tools</p>
+    <h2 class="section-title">使えるスキル・ツール</h2>
+    <div class="skills-categories">
+      <div class="skill-category">
+        <h3>AI・プロンプトエンジニアリング</h3>
+        <div class="skill-pills">
+          <span class="skill-pill">Claude</span>
+          <span class="skill-pill">ChatGPT</span>
+          <span class="skill-pill">プロンプト設計</span>
+          <span class="skill-pill">AI活用コンサル</span>
+          <span class="skill-pill">AIライティング指導</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>SNS・マーケティング</h3>
+        <div class="skill-pills">
+          <span class="skill-pill">YouTube</span>
+          <span class="skill-pill">Instagram</span>
+          <span class="skill-pill">Threads</span>
+          <span class="skill-pill">X (Twitter)</span>
+          <span class="skill-pill">LINE公式</span>
+          <span class="skill-pill">Lステップ</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>制作・デザイン</h3>
+        <div class="skill-pills">
+          <span class="skill-pill">Canva</span>
+          <span class="skill-pill">Figma</span>
+          <span class="skill-pill">Vrew</span>
+          <span class="skill-pill">シナリオ執筆</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>開発・自動化</h3>
+        <div class="skill-pills">
+          <span class="skill-pill">Google Apps Script</span>
+          <span class="skill-pill">スプレッドシート</span>
+          <span class="skill-pill">Discord構築</span>
+          <span class="skill-pill">Google Form連携</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>ビジネス基礎</h3>
+        <div class="skill-pills">
+          <span class="skill-pill">報連相</span>
+          <span class="skill-pill">オンライン秘書</span>
+          <span class="skill-pill">外注ディレクション</span>
+          <span class="skill-pill">営業</span>
+          <span class="skill-pill">コミュニティ運営</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK STYLE -->
+<section id="style">
+  <div class="section-inner reveal">
+    <p class="section-label">Work Style</p>
+    <h2 class="section-title">お仕事のスタイル</h2>
+    <div class="style-grid">
+      <div class="style-item">
+        <div class="style-icon">⚡</div>
+        <h3>即日〜翌日レスポンス</h3>
+        <p>メッセージは原則24時間以内にご返信します。</p>
+      </div>
+      <div class="style-item">
+        <div class="style-icon">🤝</div>
+        <h3>報連相の徹底</h3>
+        <p>公務員9年で培った報告・連絡・相談の習慣で、安心してお任せいただけます。</p>
+      </div>
+      <div class="style-item">
+        <div class="style-icon">📅</div>
+        <h3>納期厳守</h3>
+        <p>スケジュール管理を徹底し、期日どおりに納品します。</p>
+      </div>
+      <div class="style-item">
+        <div class="style-icon">🕐</div>
+        <h3>対応可能時間</h3>
+        <p>平日 日中メインで稼働しています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner reveal">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">お気軽にご相談ください</h2>
+    <div class="contact-box">
+      <p>
+        お仕事のご相談やお見積もりなど、お気軽にお問い合わせください。<br>
+        通常1営業日以内にご返信いたします。
+      </p>
+      <div class="contact-links">
+        <a href="#" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          LINE公式アカウント
+        </a>
+        <a href="#" class="contact-link" style="opacity:0.5; pointer-events:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="18" cy="6" r="1.5" fill="currentColor"/></svg>
+          Instagram（仕事用 準備中）
+        </a>
+        <a href="#" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          CrowdWorks プロフィール
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Ayari. All rights reserved.</p>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
